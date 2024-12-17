@@ -1,0 +1,7 @@
+bitarray==3.0.0
+numpy==2.2.0
+opencv_python==4.10.0.84
+scikit_learn==1.6.0
+scipy==1.14.1
+tqdm==4.65.0
+yt_dlp==2024.12.13
