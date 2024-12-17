@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# C++
+/build/
+*.o
+*.out
+*.exe
+
+# General
+.DS_Store
+.vscode/
