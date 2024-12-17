@@ -1,6 +1,6 @@
 # CLIM Project: Command Line Interface Multimedia
 
-Welcome to the **CLIM Project**, an experimental tool for converting multimedia files into a custom format (`.clim`) and playing them directly in the command line as colored "pixels" (spaces). This project is an initial version, developed as a learning exercise in multimedia processing, compression, and command-line visualization. It is designed for experimentation and feedback.
+This is the **CLIM Project**, an experimental tool for converting multimedia files into a custom format (`.clim`) and playing them directly in the command line as colored "pixels" (spaces). This project is an initial version, developed as a learning exercise in multimedia processing, compression, command-line visualization and complex project management. It is designed for experimentation and feedback.
 
 
 ## Features
@@ -9,7 +9,7 @@ Welcome to the **CLIM Project**, an experimental tool for converting multimedia 
    - Compresses data efficiently for lightweight command-line playback.
 
 2. **Player**:
-   - Displays `.clim` files in the terminal using background-colored characters.
+   - Displays `.clim` files in the terminal using background-colored space characters.
    - Cross-platform support for Linux, macOS, and Windows.
 
 3. **YouTube Downloader**
@@ -25,6 +25,7 @@ This project includes a Python script that uses the public library `yt_dlp` for 
 
 ### General
 - **FFmpeg**: Ensure it is installed and accessible from your terminal. Download it from [ffmpeg.org](https://ffmpeg.org).
+
 It is used for the Converter (both audio and video) and for the Player (just for the audio).
 
 ### Python (Converter)
@@ -32,6 +33,7 @@ It is used for the Converter (both audio and video) and for the Player (just for
 
 ### C++ (Player)
 - The player supports C++11 and requires g++ to compile the provided Makefile.
+
 It has been tested successfully on Windows 10 and should work across all platforms where g++ is available.
 
 
@@ -47,7 +49,7 @@ cd clim
 
 #### Converter
 ```bash
-pip install -r Converter/requirements.txt
+pip install -r requirements.txt
 ```
 
 #### Player
@@ -90,7 +92,7 @@ options:
 
 ```bash
 python -m Converter.main [-h] [--width WIDTH] [--height HEIGHT] [--fps FPS] [--chunk-size CHUNK_SIZE]
-                                [--preprocess | --no-preprocess] input output
+                              [--preprocess | --no-preprocess] input output
 
 positional arguments:
   input                 Path to the input video file.
@@ -121,30 +123,29 @@ options:
   --loop LOOP           Enable video loop (default: enabled).
 ```
 
----
 
 ## Example Workflow
-1. Download a video from YouTube:
+**1. Download a video from YouTube**:
    ```bash
    python yt_downloader.py https://www.youtube.com/watch?v=BBJa32lCaaY -o videos/video
    ```
    A file "video.mp4" should appear in the folder "videos".
 
-2. Convert the downloaded video:
+**2. Convert the downloaded video**:
    ```bash
    python -m Converter.main videos/video.mp4 clims/video.clim
    ```
    A file "video.clim" should appear in the folder "clims".
 
-3. Play the converted file in the terminal:
+**3. Play the converted file in the terminal**:
    ```bash
    "./Player/player" --loop clims/video.clim
    ```
 
 **Note**:
 
-- to interrupt the video execution press ctrl+C;
-- if you want the video to start in another CLI add `start` before the command:
+- to interrupt the video execution press `ctrl+C`;
+- if you want the video to start in another CLI, add `start` before the command:
    ```bash
    start ./Player/player --loop clims/video.clim
    ```
@@ -164,7 +165,7 @@ The CLIM file format is a binary format designed to store compressed video effic
 
 #### 1. Mode Byte `M` (1 byte)
    - The first byte specifies the **mode** of the file.
-   - Structure of `M`: `m7 m6 m5 m4 m3 m2 m1 m0`:
+   - **Structure** of `M` is - from the most to the least significant digit - **`m7` `m6` `m5` `m4` `m3` `m2` `m1` `m0`**, where:
      - **`m0`**: Always `1`, indicating a valid file.
      - **`m1`**: Format type:
        - `0`: Standard format (documented here).
@@ -184,20 +185,26 @@ The CLIM file format is a binary format designed to store compressed video effic
      - Frame rate range: from **0.015 FPS** ($` \frac{1000\; ms}{2^{16}\; msbf} `$) to **1,000 FPS** ($` \frac{1000\; ms}{1\; msbf} `$).
    - **Index of the First Byte for Audio (`IFBA`, 5 bytes)**:
      - Specifies the byte index where audio data begins.
-     - Up to **1,024 GiB of video data** before the audio section starts.
+     - Up to **1 TiB of video data** before the audio section starts.
 
 
-#### 3. **Clustered Video Content**
+#### 3. Clustered Video Content
    - **Clustering Header (`CH`)**:
      - A variable-length header describing the structure and metadata of the clusters that follow.
    - **Clusters**:
+     - The clustering process begins by analyzing each video frame, which is initially represented as a two-dimensional grid of pixels. These frames are flattened into a one-dimensional sequence (a `FlatFrame`) for more efficient processing. 
+     - The flattened pixel data is then analyzed to determine the most frequently occurring colors. The clustering algorithm selects a maximum of 255 unique colors per cluster.
+       \[[Why?](https://github.com/BestPlayerMMIII/clim?tab=readme-ov-file#why-to-use-a-maximum-of-255-pixels-per-cluster)\]
+     - Colors are prioritized based on their frequency of occurrence in the frame. The most common colors are included in the cluster, while less frequent colors are approximated or replaced by the closest match within the selected palette.
+     - The resulting cluster palette is stored alongside the compressed frame data, allowing for reconstruction during playback.
      - Each cluster represents a portion of video data compressed using one of the following methods:
-       - **Huffman Coding**: Directly compresses pixel sequences based on frequency.
+       - **Huffman**: Directly compresses pixel sequences based on frequency, associating unique sequences of bits (`codes`) to the color identification in the palette (`values`).
+         More frequent values ​​are associated with shorter codes, to optimize the required storage space without losing further information.
        - **Run-Length Encoding (RLE)**: Compresses repeated pixel sequences as `(pixel, count)`.
        - **RLE + Huffman**: Compresses the lengths of repeated sequences using Huffman, storing these instead of direct counts.
       
 
-#### 3. **Audio Data**
+#### 4. Audio Data
    - Stored in binary MP3 format, starting at the byte index specified by `IFBA`.
 
 
@@ -214,72 +221,49 @@ The encoding dynamically selects the most efficient compression method based on 
 2. **RLE Only**: Effective for frames with many repeated pixel sequences.
 3. **RLE + Huffman**: Combines the advantages of both methods, compressing run lengths with Huffman for additional efficiency.
 
----
 
 ### Why to use a maximum of 255 Pixels per Cluster?
 
-#### Optimal Cluster Size: 255 Pixels
-- **Technical Rationale**:
-  - **Byte Alignment**: A maximum of 255 pixels allows each cluster length to be represented with a single byte, reducing overhead.
-  - **Processing Efficiency**:
-    - Larger clusters increase decoding complexity and memory usage.
-    - Smaller clusters result in too many headers, causing unnecessary overhead.
-  - **Compression Balance**:
-    - Tests show that 255 pixels per cluster strikes the best balance between compression efficiency and decoding speed.
-- **Experimental Validation**:
-  - Simulations on a variety of video data confirm that this size minimizes storage while maintaining fast access times.
-- **Computational Simplicity**:
-  - Using a single-byte index (0–255) simplifies coding logic and ensures compatibility with lightweight decoding systems.
+#### Technical Motivation
+- **Byte Alignment**
+   - A maximum of 255 pixels allows each cluster length to be represented with a single byte, reducing overhead.
+- **Processing Efficiency**
+   - Larger clusters increase decoding complexity and memory usage.
+   - Smaller clusters result in too many headers, causing unnecessary overhead.
+   - Using a single-byte index (0–255) simplifies coding logic and ensures compatibility with lightweight decoding systems.
 
+#### Physiological and Perceptual Considerations
 
-### Perception of Color in Humans
+  The human visual system relies on three types of retinal cones sensitive to red, green, and blue wavelengths, enabling the perception of approximately **10 million distinct colors** within the chromatic gamut.
+  However, this perception is context-dependent, as humans cannot differentiate all colors simultaneously. Under ideal conditions, differences as small as **2% in luminance or hue** can be detected.
+  
+  Sensitivity to **luminance** (light and dark variations) is significantly greater than to **chrominance** (color differences), particularly in peripheral vision.
+  For low-resolution videos, a limited yet distinct color palette enhances clarity and visual immersion without overwhelming the viewer's perceptual limits.
+  
+  In low-resolution videos with small pixel counts, the human eye struggles to discern **minor variations** in color, particularly when individual frames are displayed for only a fraction of a second.
+  For example, at the default frame rate of 12 FPS, each frame is visible for **less than 0.084 seconds**, further reducing the viewer's ability to perceive subtle differences in color intensity or hue.
+  
+  The maximum Euclidean distance between colors in RGB space is approximately 442 (calculated as $` \sqrt{255^2 + 255^2 + 255^2} `$), representing the largest possible color difference.
+  A difference of 3 units in each of the red, green, and blue channels constitutes **less than 1.2%** of this maximum distance.
+  For small frames, where spatial detail is already limited, such minimal differences are **imperceptible** to the average viewer.
 
-#### Physiological Limits
-- The human retina has three types of cones sensitive to different wavelengths: red, green, and blue.
-- Humans can perceive approximately **10 million colors**, but not all simultaneously (this range is the chromatic gamut).
+  Furthermore, in dynamic video content, the rapid succession of frames creates a **smoothing effect** in the brain, making it nearly **impossible to notice these fine distinctions**.
+  As a result, for practical purposes in this format, a highly optimized and reduced color palette does not negatively impact perceived visual quality.
+  Instead, it enhances performance and compression efficiency while maintaining the viewer's immersive experience.
 
-#### Just Noticeable Difference (JND)
-- Under ideal conditions, humans can detect differences as small as **2% in luminance or hue**.
-- At low resolutions, spatial details limit perceivable color variations.
+**Practical Conclusion**
 
-#### Resolution Example: 103x29 (2,987 pixels)
-- In such a restricted space, the human eye cannot discern all theoretically possible color differences.
-- Limited spatial resolution reduces the effective range of perceivable chromatic variations.
-
-
-### Psycho-Perceptual Factors
-
-#### Peripheral Vision
-- Humans are more sensitive to **luminance variations** (light and dark) than **chrominance** (color), especially in peripheral vision.
-- For low-resolution videos, distinct but limited color palettes improve visual clarity and immersion.
-
-#### Reduced Impact of Wide Color Gamut
-- Technologies like HDR and extended RGB color spaces support millions of colors.
-- However, at low resolutions, their utility diminishes significantly.
-
-
-### Evidence-Based Recommendation
-
-#### Optimal Palette Size
-- A palette of **200–256 colors** is sufficient for most human applications at low resolutions (e.g., 103x29).
-- This balance ensures:
-  - Immersion and clarity.
-  - Computational efficiency.
-
-### Practical Conclusion
-For a typical user viewing a video at **103x29 resolution**, a palette with up to **256 colors** is probably almost indistinguishable from one with millions of colors. Increasing the number of colors further adds computational overhead without enhancing visual perception or immersion.
-
-#### to be continued?
+For a typical user viewing a video at **103x29 resolution**, a palette with up to **255 colors** is probably almost indistinguishable from one with millions of colors.
+Increasing the number of colors further adds computational overhead without enhancing visual perception or immersion.
 
 ---
 
 ## Current Limitations
 - This is an **early version** focused on experimentation.
-- Optimizations for speed and quality are ongoing.
+- Speed ​​and quality optimizations will be considered for future versions of this project.
 - Playback is designed for **low-resolution visuals** due to terminal constraints (default: 103x29 pixels).
 - Error handling is minimal; feedback is welcome!
 
----
 
 ## Goals and Future Directions
 This project is a starting point for exploring:
@@ -295,22 +279,31 @@ I encourage contributions and feedback as I continue to improve!
    - Implementation of essential playback functions such as:
      - **Rewind**: Navigate backward within the video.
      - **Fast-Forward**: Skip ahead in the video timeline.
-     - **Stop**: Pause and terminate playback as needed.
+     - **Stop**: Pause and restart playback as needed.
+       > Note: while it is technically possible to pause playback by clicking on the terminal window with the mouse (which stops video output) and then pressing Enter to resume, this is not an intended feature.
+       > During this "pause", the audio continues to play in the background.
 
 2. **Enhanced Compression**
-   - Improve video compression techniques for better storage efficiency and faster encoding and decoding.
+   - Improve video compression techniques for better storage efficiency and, most importantly, faster encoding - even for higher resolutions.
 
 3. **Removal of FFmpeg Dependency for Audio**
-   - Develop a proprietary audio decoding solution to eliminate reliance on FFmpeg.
+   - Develop a proprietary audio decoding solution to eliminate reliance on FFmpeg for the CLIM Player.
    - Ensure full compatibility and flexibility for integrating audio.
 
 4. **Reusable Player Framework**
-   - Package the player as a library or API for integration into other projects.
-   - Enable developers to leverage the player’s features within their applications.
+   - Package the Player as a library for integration into other projects.
+  
+5. **Subtitle Support**
+   - Add support for embedding and displaying subtitles in standard formats such as SRT or VTT.
+   - Ensure synchronization with video playback and allow user customization (e.g., font size, color).
+  
+6. **Subtitle Support**
+   - Add support for embedding and displaying sub
+
 
 ---
 
-### Legal Disclaimer
+### Disclaimer
 
 This software is provided "as is," without any express or implied warranties, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement. By using this application, you agree to the following terms:
 
@@ -332,13 +325,11 @@ This software is provided "as is," without any express or implied warranties, in
 5. **No Legal Support**:
    - The developer does not provide legal or technical support for situations arising from disputes, damages, or other claims related to the use of this software.
 
----
 
 ## License
 This project is open-source under the CC BY-NC 4.0 License. See the [`LICENSE`](https://github.com/BestPlayerMMIII/clim/blob/main/LICENSE) file for details.
 The license provides a general framework for usage, but the disclaimer above ensures additional legal protection for the developer in any unforeseen situations. 
 
----
 
 ## Acknowledgments
 Thanks to the developers of open-source tools like FFmpeg, yt-dlp, and the Python/C++ communities for their incredible resources and libraries.
