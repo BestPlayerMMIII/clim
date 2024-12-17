@@ -25,9 +25,12 @@ This project includes a Python script that uses the public library `yt_dlp` for 
 
 ### General
 - **FFmpeg**: Ensure it is installed and accessible from your terminal.
-   Download it from the official site [ffmpeg.org](https://ffmpeg.org) or directly download the build from GitHub: [Latest FFmpeg Release](https://github.com/BtbN/FFmpeg-Builds/releases/tag/latest).
-
-It is used for the Converter (both audio and video) and for the Player (just for the audio).
+   - **Download**
+      - download it from the official site [ffmpeg.org](https://ffmpeg.org)
+      - **OR** directly download the build from GitHub: [Latest FFmpeg Release](https://github.com/BtbN/FFmpeg-Builds/releases/tag/latest)
+        and [Add FFmpeg's bin Directory to the System Path Variable](https://github.com/BestPlayerMMIII/clim/blob/main/ffmpeg_path_setup.md).
+   
+   - It is used for the Converter (both audio and video) and for the Player (just for the audio).
 
 ### Python (Converter)
 - Python 3.10+
