@@ -24,7 +24,8 @@ This project includes a Python script that uses the public library `yt_dlp` for 
 ## Requirements
 
 ### General
-- **FFmpeg**: Ensure it is installed and accessible from your terminal. Download it from [ffmpeg.org](https://ffmpeg.org).
+- **FFmpeg**: Ensure it is installed and accessible from your terminal.
+   Download it from the official site [ffmpeg.org](https://ffmpeg.org) or directly download the build from GitHub: [Latest FFmpeg Release](https://github.com/BtbN/FFmpeg-Builds/releases/tag/latest).
 
 It is used for the Converter (both audio and video) and for the Player (just for the audio).
 
