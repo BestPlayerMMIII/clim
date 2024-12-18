@@ -73,7 +73,7 @@ cd Player
 make
 ```
 
-If some errors are shown, please follow the [make troubleshooting guide](docs/troubleshooting/not_recognized_make.md).
+If some errors are shown, please follow the [make troubleshooting guide](docs/troubleshooting/make.md).
 
 To build the project using `CMake` (Cross-platform: Windows/Linux/macOS):
 ```bash
@@ -83,16 +83,14 @@ cmake ..
 make
 ```
 
-> Remember to use `mingw32-make` instead of `make` if you [installed Make with MinGW](docs/troubleshooting/not_recognized_make.md#option-a-preferred-install-make-via-mingw) for Windows.
+> Remember to use `mingw32-make` instead of `make` if you [installed Make with MinGW](docs/troubleshooting/make.md#option-a-preferred-install-make-via-mingw) for Windows.
 
-If some errors are shown, please follow the [cmake troubleshooting guide](docs/troubleshooting/not_recognized_cmake.md).
+If some errors are shown, please follow the [cmake troubleshooting guide](docs/troubleshooting/cmake.md).
 
 
 ---
 
-## Usage
-
-Note: the following commands are meant to be executed from the root folder `clim`.
+## Usage overview (example below)
 
 ### 1. Download a video from YouTube (optional)
 
@@ -154,6 +152,9 @@ options:
 
 
 ## Example Workflow
+
+Note: the following commands are meant to be executed from the root folder `clim`.
+
 **1. Download a video from YouTube**:
    ```bash
    python yt_downloader.py https://www.youtube.com/watch?v=BBJa32lCaaY -o videos/video

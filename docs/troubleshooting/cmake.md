@@ -91,7 +91,7 @@ CMake is a cross-platform build system generator that simplifies project builds.
      ```bash
      make
      ```
-     > Remember to use `mingw32-make` instead of `make` if you [installed Make with MinGW](not_recognized_make.md#option-a-preferred-install-make-via-mingw).
+     > Remember to use `mingw32-make` instead of `make` if you [installed Make with MinGW](make.md#option-a-preferred-install-make-via-mingw).
    - On Windows with Visual Studio:
      - Open the generated `.sln` file in Visual Studio.
      - Build the project from within the IDE.
@@ -109,7 +109,7 @@ CMake is a cross-platform build system generator that simplifies project builds.
 
 - **Missing Compiler**:
   - Ensure you have a C++ compiler installed:
-    - **Windows**: Install [MinGW](not_recognized_make.md#option-a-preferred-install-make-via-mingw) or Visual Studio.
+    - **Windows**: Install [MinGW](make.md#option-a-preferred-install-make-via-mingw) or Visual Studio.
     - **Linux/macOS**: Install GCC or Clang via your package manager.
 
 - **CMake Errors**:
@@ -134,13 +134,14 @@ To resolve this error follow the [installation steps above](#install-cmake).
 **Steps to Resolve**
 
 #### 1. **Ensure a Compiler is Installed**
-   - **Install Visual Studio (Recommended)**:
+   > **Note**: Choose either MinGW **or** Visual Studio. If you have already installed one, proceed directly to step 2 and 3 corresponding to your selected option.
+   - **Install MinGW (Minimalist GNU for Windows)**:
+     - Download MinGW from [MinGW-w64](https://www.mingw-w64.org/).
+     - Ensure `gcc.exe` and `g++.exe` are in your `PATH`.
+   - **Install Visual Studio**:
      - Download and install Visual Studio from [here](https://visualstudio.microsoft.com/).
      - During installation, select the following workloads:
        - **Desktop development with C++** (this includes `nmake` and the MSVC compiler).
-   - **Alternative: Install MinGW (Minimalist GNU for Windows)**:
-     - Download MinGW from [MinGW-w64](https://www.mingw-w64.org/).
-     - Ensure `gcc.exe` and `g++.exe` are in your `PATH`.
 
    - After installation, verify:
      ```bash
@@ -150,7 +151,7 @@ To resolve this error follow the [installation steps above](#install-cmake).
 
 
 #### 2. **Ensure CMake is Installed**
-   - Ensure CMake is installed and available in your system's `PATH`.
+   - Ensure CMake is installed and available in your system's `PATH` ([how to install CMake](#install-cmake)).
    - Verify with:
      ```bash
      cmake --version

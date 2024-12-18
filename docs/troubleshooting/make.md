@@ -115,4 +115,4 @@ make --version
 ## Still some errors?
 Do not quit here if other errors are shown!
 
-Please try using [CMake](not_recognized_cmake.md) instead: it is cross-platform and should resolve any pending errors.
+Please try using [CMake](cmake.md) instead: it is cross-platform and should resolve any pending errors.
