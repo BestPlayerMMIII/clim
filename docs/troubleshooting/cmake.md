@@ -25,7 +25,8 @@ CMake is a cross-platform build system generator that simplifies project builds.
    - Under "System Variables", find `Path` and click **Edit**.
    - Add the path to the CMake `bin` directory (e.g., `C:\cmake-x.y.z-windows-x86_64\bin`).
 5. **Verify Installation**:
-   - Open a Command Prompt or PowerShell and type:
+   - Close the terminal after installation to refresh the PATH variable.
+   - Open a new Command Prompt or PowerShell and type:
      ```bash
      cmake --version
      ```
