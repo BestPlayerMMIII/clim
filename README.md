@@ -28,7 +28,7 @@ This project includes a Python script that uses the public library `yt_dlp` for 
    - **Download**
       - download it from the official site [ffmpeg.org](https://ffmpeg.org)
       - **OR** directly download the build from GitHub: [Latest FFmpeg Release](https://github.com/BtbN/FFmpeg-Builds/releases/tag/latest)
-        and [Add FFmpeg's bin Directory to the System Path Variable](docs/ffmpeg_path_setup.md).
+        and follow this guide on how to [add FFmpeg's bin Directory to the System Path Variable](docs/ffmpeg_path_setup.md).
    
    - It is used for the Converter (both audio and video) and for the Player (just for the audio).
 
@@ -36,9 +36,14 @@ This project includes a Python script that uses the public library `yt_dlp` for 
 - Python 3.10+
 
 ### C++ (Player)
-- The player supports C++11 and requires g++ to compile the provided Makefile.
+- The player supports C++11 and requires g++ and Make or CMake to compile with the provided Makefile or CMakeLists.txt.
 
-It has been tested successfully on Windows 10 and should work across all platforms where g++ is available.
+Recommended build tools:
+- Make (Linux/macOS)
+- Visual Studio (Windows)
+- CMake (Cross-platform)
+
+It has been tested successfully on Windows 10 and Windows 11 and should work across all platforms.
 
 
 ## Installation
@@ -52,22 +57,42 @@ cd clim
 ### 2. Install Dependencies
 
 #### Converter
+Make sure you have [Python 3.10 or higher](https://www.python.org/downloads/) installed.
+
+Then - from the terminal or cmd - type this command inside the cloned repository folder `clim`:
 ```bash
 pip install -r requirements.txt
 ```
 
 #### Player
-Compile the C++ code. To build the project using `Make`:
+Compile the C++ code.
+
+To build the project using `Make` (Linux/macOS):
 ```bash
 cd Player
 make
 ```
 
+If some errors are shown, please follow the [make troubleshooting guide](docs/troubleshooting/not_recognized_make.md).
+
+To build the project using `CMake` (Cross-platform: Windows/Linux/macOS):
+```bash
+cd Player
+mkdir build && cd build
+cmake ..
+make
+```
+
+> Remember to use `mingw32-make` instead of `make` if you [installed Make with MinGW](docs/troubleshooting/not_recognized_make.md#option-a-preferred-install-make-via-mingw) for Windows.
+
+If some errors are shown, please follow the [cmake troubleshooting guide](docs/troubleshooting/not_recognized_cmake.md).
+
+
 ---
 
 ## Usage
 
-Note: the commands are meant to be executed from the root folder `clim`.
+Note: the following commands are meant to be executed from the root folder `clim`.
 
 ### 1. Download a video from YouTube (optional)
 
@@ -161,7 +186,7 @@ You got rickrolled by a CLIM file in a Command Line Interface (before GTA 6).
 ---
 
 ## CLIM File Format Documentation
-For detailed information on the implementation of the CLIM file format, please refer to the [clim_format](docs/ffmpeg_path_setup.md) file.
+For detailed information on the implementation of the CLIM file format, please refer to the [clim_format](docs/clim_format.md) file.
 
 
 ## Current Limitations
@@ -233,7 +258,7 @@ This software is provided "as is," without any express or implied warranties, in
 
 
 ## License
-This project is open-source under the CC BY-NC 4.0 License. See the [`LICENSE`](https://github.com/BestPlayerMMIII/clim/blob/main/LICENSE) file for details.
+This project is open-source under the CC BY-NC 4.0 License. See the [`LICENSE`](LICENSE) file for details.
 The license provides a general framework for usage, but the disclaimer above ensures additional legal protection for the developer in any unforeseen situations. 
 
 

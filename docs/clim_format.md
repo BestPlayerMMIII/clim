@@ -24,7 +24,7 @@ The CLIM file format is a binary format designed to store compressed video effic
      - Maximum supported height: **65,536 pixels**.
    - **Milliseconds Between Frames (`MSBF`, 2 bytes)**:
      - Specifies the time between frames in milliseconds, as an unsigned 16-bit integer.
-     - Frame rate range: from **0.015 FPS** ($` \frac{1000\; ms}{2^{16}\; msbf} `$) to **1,000 FPS** ($` \frac{1000\; ms}{1\; msbf} `$).
+     - Frame rate range: from **0.015 FPS** ($ \frac{1000\; ms}{2^{16}\; msbf} $) to **1,000 FPS** ($ \frac{1000\; ms}{1\; msbf} $).
    - **Index of the First Byte for Audio (`IFBA`, 5 bytes)**:
      - Specifies the byte index where audio data begins.
      - Up to **1 TiB of video data** before the audio section starts.
@@ -85,7 +85,7 @@ The encoding dynamically selects the most efficient compression method based on 
   In low-resolution videos with small pixel counts, the human eye struggles to discern **minor variations** in color, particularly when individual frames are displayed for only a fraction of a second.
   For example, at the default frame rate of 12 FPS, each frame is visible for **less than 0.084 seconds**, further reducing the viewer's ability to perceive subtle differences in color intensity or hue.
   
-  The maximum Euclidean distance between colors in RGB space is approximately 442 (calculated as $` \sqrt{255^2 + 255^2 + 255^2} `$), representing the largest possible color difference.
+  The maximum Euclidean distance between colors in RGB space is approximately 442 (calculated as $ \sqrt{255^2 + 255^2 + 255^2} $), representing the largest possible color difference.
   A difference of 3 units in each of the red, green, and blue channels constitutes **less than 1.2%** of this maximum distance.
   For small frames, where spatial detail is already limited, such minimal differences are **imperceptible** to the average viewer.
 
