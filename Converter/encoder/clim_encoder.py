@@ -172,8 +172,9 @@ def encode_video_to_clim(
         # Update standard format header with IFBA
         clim_file_content.extend(format(IFBA, "040b"))
         clim_file_content.frombytes(header_clustering)
-
+        
         # Write chunks and header to CLIM file
+        ensure_directory_exists(os.path.dirname(clim_filepath))
         with open(clim_filepath, mode="wb") as clim_file:
             clim_file.write(clim_file_content)
             for chunk_filepath in chunk_filepaths:
