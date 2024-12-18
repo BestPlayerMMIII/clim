@@ -175,18 +175,20 @@ Note: the following commands are meant to be executed from the root folder `clim
 
 **3. Play the converted file in the terminal**:
    ```bash
-   "./Player/player" --loop clims/video.clim
-   ```
-
-**Note**:
-
-- to interrupt the video execution press `ctrl+C`;
-- if you want the video to start in another CLI, add `start` before the command:
-   ```bash
    start ./Player/player --loop clims/video.clim
    ```
 
-**Expected result for the example**
+**Notes**:
+
+- to **interrupt the multimedia player** press `Ctrl+C` or directly close the command line window;
+- if you want the video to **start in the currently running CLI** instead of a new one, use this command instead:
+   ```bash
+   "./Player/player" --loop clims/video.clim
+   ```
+- **Audio and video may occasionally become desynchronized**, with the audio starting slightly later than the video, which begins as soon as the program runs.
+  This is likely caused by FFmpeg's initialization delay. If you encounter this issue, press `Ctrl+C` to **stop the program and then run the command again**.
+
+**Expected result for the example**:
 
 You got rickrolled by a CLIM file in a Command Line Interface (before GTA 6).
 
