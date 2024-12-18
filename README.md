@@ -50,7 +50,7 @@ It has been tested successfully on Windows 10 and Windows 11 and should work acr
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/BestPlayer/clim.git
+git clone https://github.com/BestPlayerMMIII/clim.git
 cd clim
 ```
 
