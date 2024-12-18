@@ -67,7 +67,7 @@ pip install -r requirements.txt
 #### Player
 Compile the C++ code.
 
-To build the project using `Make` (Linux/macOS):
+To build the project using **`Make` (Linux/macOS)**:
 ```bash
 cd Player
 make
@@ -75,7 +75,7 @@ make
 
 If some errors are shown, please follow the [make troubleshooting guide](docs/troubleshooting/make.md).
 
-To build the project using `CMake` (Cross-platform: Windows/Linux/macOS):
+To build the project using **`CMake` (Cross-platform: Windows/Linux/macOS)**:
 ```bash
 cd Player
 mkdir build && cd build
@@ -83,7 +83,13 @@ cmake ..
 make
 ```
 
-> Remember to use `mingw32-make` instead of `make` if you [installed Make with MinGW](docs/troubleshooting/make.md#option-a-preferred-install-make-via-mingw) for Windows.
+To build the project using **`CMake` if you [installed Make with MinGW](docs/troubleshooting/make.md#option-a-preferred-install-make-via-mingw) for Windows**:
+```bash
+cd Player
+mkdir build && cd build
+cmake -G "MinGW Makefiles" ..
+mingw32-make
+```
 
 If some errors are shown, please follow the [cmake troubleshooting guide](docs/troubleshooting/cmake.md).
 
