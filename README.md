@@ -213,9 +213,13 @@ This project is a starting point for exploring:
 
 I encourage contributions and feedback as I continue to improve!
 
-### Planned Features for Future Releases
+### Planned Features for Future Releases  
 
-1. **Playback Controls**
+1. **Enhanced Video-Audio Synchronization**  
+   - Guarantee seamless synchronization between audio and video under all circumstances.  
+   - Introduce advanced threading mechanisms to efficiently manage playback timing and synchronization.  
+
+2. **Playback Controls**
    - Implementation of essential playback functions such as:
      - **Rewind**: Navigate backward within the video.
      - **Fast-Forward**: Skip ahead in the video timeline.
@@ -223,22 +227,19 @@ I encourage contributions and feedback as I continue to improve!
        > Note: while it is technically possible to pause playback by clicking on the terminal window with the mouse (which stops video output) and then pressing Enter to resume, this is not an intended feature.
        > During this "pause", the audio continues to play in the background.
 
-2. **Enhanced Compression**
+3. **Enhanced Compression**
    - Improve video compression techniques for better storage efficiency and, most importantly, faster encoding - even for higher resolutions.
 
-3. **Removal of FFmpeg Dependency for Audio**
+4. **Removal of FFmpeg Dependency for Audio**
    - Develop a proprietary audio decoding solution to eliminate reliance on FFmpeg for the CLIM Player.
    - Ensure full compatibility and flexibility for integrating audio.
 
-4. **Reusable Player Framework**
+5. **Reusable Player Framework**
    - Package the Player as a library for integration into other projects.
   
-5. **Subtitle Support**
+6. **Subtitle Support**
    - Add support for embedding and displaying subtitles in standard formats such as SRT or VTT.
    - Ensure synchronization with video playback and allow user customization (e.g., font size, color).
-  
-6. **Subtitle Support**
-   - Add support for embedding and displaying sub
 
 
 ---
