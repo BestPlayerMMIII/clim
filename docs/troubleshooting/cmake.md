@@ -143,7 +143,7 @@ To resolve this error follow the [installation steps above](#install-cmake).
 #### 1. **Ensure a Compiler is Installed**
    > **Note**: Choose either MinGW **or** Visual Studio. If you have already installed one, proceed directly to step 2 and 3 corresponding to your selected option.
    - **Install MinGW (Minimalist GNU for Windows)**:
-     - Download MinGW from [MinGW-w64](https://www.mingw-w64.org/).
+     - Download MinGW following [these steps](make.md#option-a-preferred-install-make-via-mingw).
      - Ensure `gcc.exe` and `g++.exe` are in your `PATH`.
    - **Install Visual Studio**:
      - Download and install Visual Studio from [here](https://visualstudio.microsoft.com/).
@@ -158,7 +158,7 @@ To resolve this error follow the [installation steps above](#install-cmake).
 
 
 #### 2. **Ensure CMake is Installed**
-   - Ensure CMake is installed and available in your system's `PATH` ([how to install CMake](#install-cmake)).
+   - Ensure CMake is installed and available in your system's `PATH` (eventually check out [how to install CMake](#install-cmake)).
    - Verify with:
      ```bash
      cmake --version
