@@ -1,6 +1,6 @@
 # CMake - Installation and Troubleshooting
 
-If you want to Install CMake or for troubleshooting, please follow this guide.
+If you want to install CMake or need help with troubleshooting, follow this guide.
 
 ---
 

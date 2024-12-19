@@ -1,24 +1,12 @@
 # Make - Installation and Troubleshooting
 
-If you want to Install Make or to solve "make is not recognized as an internal or external command operable program or batch file" Error, please follow this guide.
+If you want to install Make or need help with troubleshooting, follow this guide.
 
-The error message indicates that the `make` command is not recognized. This happens because:
+---
 
-1. `make` is not installed on your system
-2. `make` is installed but not included in the `PATH`, so the system cannot find it.
+## 1. Install Make
 
-Here’s how to resolve the issue on different platforms:
-
-
-## 1. Verify if `make` is installed
-Open your terminal or command prompt and run:
-```bash
-make --version
-```
-If the command is not recognized, proceed with the installation steps below.
-
-
-## 2. Install `make`
+**Note**: this should resolve also the error `"make" is not recognized as an internal or external command operable program or batch file`
 
 ### On Windows
 `make` is not included by default in Windows. Use one of the following methods:
@@ -111,8 +99,15 @@ make --version
    make --version
    ```
 
+## 2. Verify if Make is installed correctly
+Open your terminal or command prompt and run:  
+```bash  
+make --version  
+```  
+The command should now be recognized, displaying the Make version.
 
-## Still some errors?
+**Still some errors?**
+
 Do not quit here if other errors are shown!
 
 Please try using [CMake](cmake.md) instead: it is cross-platform and should resolve any pending errors.
