@@ -153,7 +153,7 @@ positional arguments:
   input                 Path to the input file in CLIM format.
 
 options:
-  --loop LOOP           Enable video loop (default: enabled).
+  --loop LOOP           Enable video loop (default: disabled).
 ```
 
 
